@@ -1,0 +1,72 @@
+============================
+API Endpoint Instructions
+============================
+
+GET /get_country
+---------------------
+- Description: Returns a random country name and stores it for the guessing game.
+- URL: http://127.0.0.1:5000/get_country
+
+Sample curl:
+curl --location 'http://127.0.0.1:5000/get_country'
+
+Sample response:
+{
+  "country": "Barbados"
+}
+
+Note: This must be called before /check_capital
+
+
+POST /check_capital
+------------------------
+- Description: Submits your guessed capital and checks if it's correct.
+- URL: http://127.0.0.1:5000/check_capital
+- Headers:
+  Content-Type: application/json
+- Body (JSON):
+  {
+    "capital": "YourGuess"
+  }
+
+Sample curl:
+curl --location 'http://127.0.0.1:5000/check_capital' \
+--header 'Content-Type: application/json' \
+--data '{"capital": "Bridgetown"}'
+
+Correct guess response:
+{
+  "correct": true,
+  "message": "Well done!"
+}
+
+Incorrect guess response:
+{
+  "correct": false,
+  "message": "Incorrect! The correct capital is Bridgetown."
+}
+
+Missing capital in request:
+{
+  "correct": false,
+  "message": "You did not provide a guess. Please enter a capital."
+}
+
+No capital available for country:
+{
+  "correct": false,
+  "message": "This country does not have a recorded capital. Please try another country."
+}
+
+
+============================
+Testing Sequence
+============================
+
+Step 1 → Call:
+curl --location 'http://127.0.0.1:5000/get_country'
+
+Step 2 → Use the returned country name to guess its capital:
+curl --location 'http://127.0.0.1:5000/check_capital' \
+--header 'Content-Type: application/json' \
+--data '{"capital": "YourGuess"}'
