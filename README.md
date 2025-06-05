@@ -80,3 +80,14 @@ Responses:
     "message": "This country does not have a recorded capital. Please try another country."
   }
 
+
+Testing Sequence
+============================
+
+Step 1 → Call:
+curl --location 'http://127.0.0.1:5000/get_country'
+
+Step 2 → Use the returned country name to guess its capital:
+curl --location 'http://127.0.0.1:5000/check_capital' \
+--header 'Content-Type: application/json' \
+--data '{"capital": "YourGuess"}'
